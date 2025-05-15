@@ -106,53 +106,74 @@ function Homepage() {
   
 
   return (
-    <div>
-      <Form className="mb-3" onSubmit={(e) => {
+    <div style={{ background: '#f8f9fa', minHeight: '100vh', paddingTop: '20px' }}>
+    <Container>
+      <Form className="mb-4" onSubmit={(e) => {
         e.preventDefault();
-        fetchCars(query); // Manual search on button click
+        fetchCars(query);
       }}>
-        <Row className="align-items-center justify-content-center ">
-          <Col xs="auto">
+        <Row className="justify-content-center">
+          <Col xs={10} sm={8} md={6} className="d-flex gap-2">
             <Form.Control
               type="text"
-              placeholder="Search..."
+              placeholder="Search cars by brand, model, location..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
+              className="rounded-pill px-3"
             />
-          </Col>
-          <Col xs="auto">
-            <Button variant="primary" type="submit" onSubmit={fetchCars}>Search</Button>
+            <Button type="submit" variant="primary" className="rounded-pill px-4">
+              Search
+            </Button>
           </Col>
         </Row>
       </Form>
 
-      <Container className='mt-2'>
-        <Row className='g-2'> 
-          {cars.map((car) => (
-            <Col key={car._id} xs={6} sm={6} md={4} lg={3} className="mb-4">
-              <Card>
-                <Card.Img  src={car.image}   style={{ height: '200px', objectFit: 'cover' }} className="card-img-top"/>
-                <Card.Body>
-                  <Card.Title>{car.brand} {car.model}</Card.Title>
-                  <Card.Text>
-                    Price per day : {car.pricePerDay}<br />
-                    Location : {car.location}<br/>
-                    Availability:    {car.availability ? "Available" : "Not available"}
-                  </Card.Text>
-                 
+      <Row className="g-4">
+        {cars.map((car) => (
+          <Col key={car._id} xs={12} sm={6} md={4} lg={3}>
+            <Card className="h-100 shadow-sm rounded-4">
+              <Card.Img
+                variant="top"
+                src={car.image}
+                style={{ height: '180px', objectFit: 'cover', borderTopLeftRadius: '1rem', borderTopRightRadius: '1rem' }}
+              />
+              <Card.Body className="d-flex flex-column">
+                <Card.Title className="fw-bold text-center">{car.brand} {car.model}</Card.Title>
+                <Card.Text className="text-muted small text-center mb-2">
+                  ₹{car.pricePerDay}/day · {car.location}
+                </Card.Text>
+                <div className="text-center mb-3">
+                  <span
+                    className={`badge px-3 py-2 rounded-pill ${
+                      car.availability ? 'bg-success' : 'bg-secondary'
+                    }`}
+                  >
+                    {car.availability ? "Available" : "Not Available"}
+                  </span>
+                </div>
+                <div className="d-flex flex-column align-items-center gap-2 mt-auto">
                   <Link to={`/userdashboard/cardetails/${car._id}`}>
-                    <Button variant="danger" className='m-2' onClick={(e)=>{handleUnavailable(car,e)}}>MORE</Button>
+                    <Button
+                      variant="outline-primary"
+                      className="rounded-pill fw-semibold px-4"
+                      onClick={(e) => handleUnavailable(car, e)}
+                    >
+                      More 
+                    </Button>
                   </Link>
                   <Link to={`/userdashboard/reviews/${car._id}`}>
-                    <Button variant="warning" className='m-2' >REVIEWS</Button>
+                    <Button variant="outline-warning" className="rounded-pill fw-semibold px-4">
+                      Reviews
+                    </Button>
                   </Link>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-      </Container>
-    </div>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+        ))}
+      </Row>
+    </Container>
+  </div>
   );
 }
 

@@ -89,42 +89,64 @@ function Cardetails() {
   };
 
   return (
-    <Container  style={{width:'500px' }}  className='text-center'>
-      <Row>
-        <Form.Group className="mb-3">
-          <Form.Label>Number of Days</Form.Label>
-          <Form.Control
-            type="number"
-            min="1"
-            value={days}
-            onChange={(e) => setDays(Number(e.target.value))}
+    <Container className="py-5 d-flex justify-content-center">
+    <Row className="w-100" style={{ maxWidth: '800px' }}>
+      <Col md={12}>
+        <Card className="shadow-lg border-0 rounded-4 overflow-hidden">
+          <Card.Img
+            src={cars.image}
+            alt="Car"
+            style={{ height: '350px', objectFit: 'cover' }}
           />
-        </Form.Group>
-        <Col>
-          <div>
-            <Card className="text-center card">
-              <Card.Img  src={cars.image} className="img-fluid" style={{ height: '250px', objectFit: 'cover' }} variant='top'/>
-              <Card.Body>
-                <Card.Title>{cars.model}</Card.Title>
-                <Card.Text>{cars.brand}</Card.Text>
-                <Card.Title>{cars.year}</Card.Title>
-                <Card.Title>{cars.registrationNumber}</Card.Title>
-                <Card.Title>{cars.location}</Card.Title>
-                <Card.Text>{cars.description}</Card.Text>
-                <Card.Text>{cars.pricePerDay}</Card.Text>
-                <Card.Title>{cars.vehicleNumber}</Card.Title>
-                <Card.Text>
-                  Availability: {cars.availability ? "Available" : "Not available"}
-                </Card.Text>
-                <Button variant="danger" onClick={makePayment}>
-                  Book
-                </Button>
-              </Card.Body>
-            </Card>
-          </div>
-        </Col>
-      </Row>
-    </Container>
+          <Card.Body className="p-4">
+            <h3 className="mb-3">{cars.brand} {cars.model}</h3>
+            <Row className="mb-3 text-start">
+              <Col sm={6}>
+                <p><strong>Year:</strong> {cars.year}</p>
+                <p><strong>Location:</strong> {cars.location}</p>
+                <p><strong>Registration Number:</strong> {cars.registrationNumber}</p>
+              </Col>
+              <Col sm={6}>
+                <p><strong>Vehicle Number:</strong> {cars.vehicleNumber}</p>
+                <p><strong>Price Per Day:</strong> ₹{cars.pricePerDay}</p>
+                <p>
+                  <strong>Availability:</strong>{' '}
+                  <span className={cars.availability ? 'text-success' : 'text-danger'}>
+                    {cars.availability ? 'Available' : 'Not Available'}
+                  </span>
+                </p>
+              </Col>
+            </Row>
+  
+            <p className="text-start"><strong>Description:</strong> {cars.description}</p>
+  
+            <Form.Group className="my-4 w-50 mx-auto">
+              <Form.Label><strong>Number of Days</strong></Form.Label>
+              <Form.Control
+                type="number"
+                min="1"
+                value={days}
+                onChange={(e) => setDays(Number(e.target.value))}
+                className="text-center"
+              />
+            </Form.Group>
+  
+            <div className="d-flex justify-content-center">
+              <Button
+                variant="danger"
+                className="px-5 py-2 rounded-pill fw-semibold"
+                onClick={makePayment}
+                disabled={!cars.availability}
+              >
+                Book Now
+              </Button>
+            </div>
+          </Card.Body>
+        </Card>
+      </Col>
+    </Row>
+  </Container>
+  
   );
 }
 
