@@ -14,9 +14,7 @@ function Booking() {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const response = await axios.get(`${baseUrl}/booking/userbooking`,{
-          withCredentials:true
-        }); // Fetch all bookings for the user
+        const response = await axios.get(`${baseUrl}/booking/userbooking`); // Fetch all bookings for the user
         setBookings(response.data); // Set the response data which is an array of bookings
         console.log(response.data);  // Log to ensure we get the data in the correct structure
       } catch (error) {
@@ -57,71 +55,41 @@ function Booking() {
   };
 
   return (
-    <Container className="py-5">
-    <h2 className="text-center mb-5">Your Bookings</h2>
-  
-    <Row className="g-4">
+    <div className="container mt-4">
+      <h2 className="text-center mb-4">Your Bookings</h2>
       {bookings.map((booking) => {
         const { carId, _id: bookingId, totalAmount, paymentStatus, status } = booking;
-  
+
         if (!carId) {
-          return (
-            <Col key={bookingId} md={6}>
-              <Card className="p-3 border-danger text-danger">
-                Error: Car information is missing in the booking.
-              </Card>
-            </Col>
-          );
+          return <div key={bookingId}>Error: Car information is missing in the booking.</div>;
         }
-  
+
         return (
-          <Col key={bookingId} md={6} lg={4}>
-            <Card className="shadow-lg border-0 rounded-4 h-100">
-              <Card.Body className="d-flex flex-column justify-content-between">
-                <div>
-                  <Card.Title className="mb-3">
-                    <h4 className="text-primary">{carId.model}</h4>
-                  </Card.Title>
-                  <Row className="text-muted">
-                    <Col xs={6}>
-                      <p><strong>Brand:</strong> {carId.brand}</p>
-                      <p><strong>Price/Day:</strong> ₹{carId.pricePerDay}</p>
-                      <p><strong>Payment:</strong> 
-                        <span className={paymentStatus === 'completed' ? 'text-success' : 'text-warning'}>
-                          {' '}{paymentStatus}
-                        </span>
-                      </p>
-                    </Col>
-                    <Col xs={6}>
-                      <p><strong>Car ID:</strong> {carId._id}</p>
-                      <p><strong>Booking:</strong> 
-                        <span className={status === 'confirmed' ? 'text-success' : 'text-danger'}>
-                          {' '}{status}
-                        </span>
-                      </p>
-                      <p><strong>Total:</strong> ₹{totalAmount}</p>
-                    </Col>
-                  </Row>
-                </div>
-  
-                <div className="text-center mt-3">
-                  <Button
-                    variant="outline-danger"
-                    className="px-4 py-2"
-                    onClick={() => handleCancelBooking(bookingId)}
-                    disabled={loading}
-                  >
-                    Cancel Booking
-                  </Button>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
+          <div key={bookingId} className="card shadow p-4 rounded mb-4">
+            <h3>Car Model: {carId?.model || 'N/A'}</h3>
+            <p><strong>Car ID:</strong> {carId?._id || 'N/A'}</p>
+            <p><strong>Car Brand:</strong> {carId?.brand || 'N/A'}</p>
+            <p><strong>Rental Price per Day:</strong> {carId?.pricePerDay || 'N/A'}</p>
+            <p><strong>Total Amount:</strong> {totalAmount}</p>
+            <p><strong>Payment Status:</strong> {paymentStatus}</p>
+            <p><strong>Booking Status:</strong> {status}</p>
+
+            <div className="mt-4">
+              <h4><strong>Total Amount:</strong> {totalAmount}</h4>
+            </div>
+            <div className="mt-4">
+              <Button
+                variant="danger"
+                onClick={() => handleCancelBooking(bookingId)}
+                disabled={loading} // Disable button if loading is true
+              >
+                Cancel Booking
+              </Button>
+            </div>
+          </div>
         );
       })}
-    </Row>
-  </Container>
-  
+    </div>
   );
 }
 
