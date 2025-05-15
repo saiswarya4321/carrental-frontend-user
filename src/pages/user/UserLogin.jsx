@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { saveuser } from '../../redux/Userslice';
 import { useTheme } from '../../context/ThemeContext';
+import { toast } from 'react-toastify';
 
 function UserLogin() {
   const [data, setData] = useState({ email: '', password: '' });
@@ -27,7 +28,7 @@ function UserLogin() {
       dispatch(saveuser(res.data.userExist));
       navigate('/userdashboard/homepage');
     } catch (err) {
-      alert(err.response?.data?.message || 'Invalid credentials');
+      toast.error(err.response?.data?.message || 'Invalid credentials');
     }
     finally{
       setLoading(false);
