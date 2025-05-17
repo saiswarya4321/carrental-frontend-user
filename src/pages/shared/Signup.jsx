@@ -3,6 +3,7 @@ import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext'; // Import the useTheme hook
+import { toast } from 'react-toastify';
 
 function Signup() {
   const { darkMode } = useTheme(); // Access the darkMode state from the context
@@ -27,6 +28,7 @@ function Signup() {
 
     const response = await axios.post(`${baseUrl}/user/register`, data);
     console.log(response, "*********response");
+    toast.success("User registered successfuly")
     navigate("/login");
   }
 
@@ -44,7 +46,7 @@ function Signup() {
                     type="text"
                     className={`form-control rounded-3 ${darkMode ? 'bg-dark text-white' : ''}`}
                     id="name"
-                    placeholder="Enter your full name" name='name' onChange={handleChange} value={data.name}
+                    placeholder="Enter your full name" name='name' onChange={handleChange} value={data.name} required
                   />
                 </div>
 
@@ -54,7 +56,7 @@ function Signup() {
                     type="email"
                     className={`form-control rounded-3 ${darkMode ? 'bg-dark text-white' : ''}`}
                     id="email"
-                    placeholder="Enter your email" name='email' onChange={handleChange} value={data.email}
+                    placeholder="Enter your email" name='email' onChange={handleChange} value={data.email} required
                   />
                 </div>
 
@@ -64,7 +66,7 @@ function Signup() {
                     type="tel"
                     className={`form-control rounded-3 ${darkMode ? 'bg-dark text-white' : ''}`}
                     id="contact"
-                    placeholder="Enter contact number" name='contactNumber' onChange={handleChange} value={data.contactNumber}
+                    placeholder="Enter contact number" name='contactNumber' onChange={handleChange} value={data.contactNumber} required
                   />
                 </div>
 
@@ -74,7 +76,7 @@ function Signup() {
                     type="password"
                     className={`form-control rounded-3 ${darkMode ? 'bg-dark text-white' : ''}`}
                     id="password"
-                    placeholder="Create password" name='password' onChange={handleChange} value={data.password}
+                    placeholder="Create password" name='password' onChange={handleChange} value={data.password} required
                   />
                 </div>
 
@@ -84,7 +86,7 @@ function Signup() {
                     type="password"
                     className={`form-control rounded-3 ${darkMode ? 'bg-dark text-white' : ''}`}
                     id="confirmPassword"
-                    placeholder="Confirm password" name='confirmPassword' onChange={handleChange} value={data.confirmPassword}
+                    placeholder="Confirm password" name='confirmPassword' onChange={handleChange} value={data.confirmPassword} required
                   />
                 </div>
 

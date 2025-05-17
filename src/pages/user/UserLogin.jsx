@@ -49,11 +49,11 @@ function UserLogin() {
               <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3">
                   <Form.Label>Email</Form.Label>
-                  <Form.Control className={inputClass} type="email" name="email" onChange={handleChange} value={data.email} />
+                  <Form.Control className={inputClass} type="email" name="email" onChange={handleChange} value={data.email} required/>
                 </Form.Group>
                 <Form.Group className="mb-4">
                   <Form.Label>Password</Form.Label>
-                  <Form.Control className={inputClass} type="password" name="password" onChange={handleChange} value={data.password} />
+                  <Form.Control className={inputClass} type="password" name="password" onChange={handleChange} value={data.password} required />
                 </Form.Group>
                 <Button type="submit" className="w-100 rounded-3 fw-semibold">Login</Button>
               </Form>
