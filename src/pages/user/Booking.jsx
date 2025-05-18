@@ -12,14 +12,18 @@ function Booking() {
 
   // Fetch booking details when the component mounts
   useEffect(() => {
+
     const fetchBookings = async () => {
+     
       try {
-        const response = await axios.get(`${baseUrl}/booking/userbooking`); // Fetch all bookings for the user
-        setBookings(response.data); // Set the response data which is an array of bookings
-        console.log(response.data);  // Log to ensure we get the data in the correct structure
+        const response = await axios.get(`${baseUrl}/booking/userbooking`,{
+          withCredentials:true
+        }); 
+        setBookings(response.data); 
+        console.log(response.data);  
       } catch (error) {
         console.error("Error fetching bookings:", error);
-        setError("Failed to fetch bookings.");
+        setError("No bookings found.");
       } finally {
         setLoading(false);
       }
