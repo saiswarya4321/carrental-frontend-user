@@ -15,22 +15,27 @@ function Signup() {
     setData((data) => ({ ...data, [event.target.name]: event.target.value }));
   }
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+ const handleSubmit = async (event) => {
+  event.preventDefault();
 
-    setData({
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      contactNumber: ""
-    });
-
-    const response = await axios.post(`${baseUrl}/user/register`, data);
+  try {
+    const response = await axios.post(`${baseUrl}/user/register`, data, { withCredentials: true });
     console.log(response, "*********response");
-    toast.success("User registered successfuly")
+    toast.success("User registered successfully");
     navigate("/login");
+  } catch (err) {
+    console.error("Signup error:", err);
+    toast.error(err.response?.data?.error || 'Something went wrong');
   }
+
+  setData({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    contactNumber: ""
+  });
+}
 
   return (
     <Container className={`d-flex align-items-center justify-content-center min-vh-100 mt-3 mb-3 ${darkMode ? 'bg-dark text-white' : 'bg-light text-dark'}`}>
