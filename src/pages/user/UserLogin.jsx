@@ -29,13 +29,14 @@ function UserLogin() {
       //dispatch(saveuser(res.data.user));
 
       dispatch(saveuser(res.data.user)); 
-      
+
       console.log("Dispatched user object:", res.data.userExist);
       console.log("Full login response:", res.data);
       
       navigate('/userdashboard/homepage');
     } catch (err) {
       toast.error(err.response?.data?.message || 'Invalid credentials');
+      console.error("Login error:", err.message, err.stack);
     }
     finally{
       setLoading(false);
