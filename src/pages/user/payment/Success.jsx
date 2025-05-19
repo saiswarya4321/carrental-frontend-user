@@ -9,6 +9,9 @@ function Success() {
   const navigate = useNavigate();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
+  
+  const reduxUserState = useSelector((state) => state.user);
+console.log("Full Redux user slice state:", reduxUserState);
 
   const user = useSelector((state) => state.user.user);
   const userId = user?._id;
@@ -38,40 +41,37 @@ function Success() {
   }, []);
 
   useEffect(() => {
-    if (hasSaved.current) return;   // skip on second mount
-    hasSaved.current = true;
+  if (hasSaved.current || !userId) return; // ⬅️ Skip if already saved or userId isn't ready
+  hasSaved.current = true;
 
-    const carId = localStorage.getItem("carId");
-    const days = Number(localStorage.getItem("days") || 1);
-    const car = JSON.parse(localStorage.getItem("carData") || "{}");
+  const carId = localStorage.getItem("carId");
+  const days = Number(localStorage.getItem("days") || 1);
+  const car = JSON.parse(localStorage.getItem("carData") || "{}");
 
-    // Now we include userId and model
-    const body = {
-      userId,
-      carId,
-      model: car.model,
-      days,
-      totalAmount: car.pricePerDay * days,
-      paymentStatus: "completed",
-      sessionId,
-    };
+  if (!carId || !car.model || !car.pricePerDay) {
+    console.warn("Booking aborted due to missing car data", { car });
+    return;
+  }
 
-    console.log("Booking payload being sent:", {
-      userId,
-      carId,
-      model: car.model,
-      days,
-      totalAmount: car.pricePerDay * days,
-      sessionId,
-    });
+  const body = {
+    userId,
+    carId,
+    model: car.model,
+    days,
+    totalAmount: car.pricePerDay * days,
+    paymentStatus: "completed",
+    sessionId,
+  };
 
-    axios
-      .post(`${baseUrl}/booking/create`, body, { withCredentials: true })
-      .then(() => console.log("Booking saved"))
-      .catch((err) =>
-        console.error("Failed to save booking:", err.response?.data || err.message)
-      );
-  }, [userId, sessionId]);
+  console.log("Booking payload being sent:", body);
+
+  axios
+    .post(`${baseUrl}/booking/create`, body, { withCredentials: true })
+    .then(() => console.log("✅ Booking saved successfully"))
+    .catch((err) =>
+      console.error("❌ Failed to save booking:", err.response?.data || err.message)
+    );
+}, [userId, sessionId, baseUrl]);
 
   return (
     <div style={{ textAlign: "center", marginTop: "6rem" }}>
