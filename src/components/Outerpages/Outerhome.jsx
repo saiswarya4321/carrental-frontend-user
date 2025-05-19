@@ -1,17 +1,64 @@
 import React from 'react';
 import { Container, Row, Col, Button, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { useTheme } from '../../context/ThemeContext';  // Importing the useTheme hook
+import { useTheme } from '../../context/ThemeContext';  
+import Carousel from 'react-bootstrap/Carousel';
 
 function Outerhome() {
-  const { darkMode } = useTheme();  // Accessing the darkMode state
+  const { darkMode } = useTheme();  
 
   return (
     <div className={darkMode ? 'bg-dark text-white' : 'bg-light text-dark'}> {/* Conditional classes based on dark mode */}
       <div className="py-5">
         <Container>
+
+<Carousel data-bs-theme="dark">
+      <Carousel.Item>
+        <img
+          className="d-block w-100"
+          src="https://images.pexels.com/photos/1009871/pexels-photo-1009871.jpeg?auto=compress&cs=tinysrgb&w=600"
+          alt="First slide"
+        />
+        <Carousel.Caption>
+          
+          <p>"Rent fast. Drive smart.
+Freedom is just a key away."
+
+</p>
+        </Carousel.Caption>
+      </Carousel.Item>
+      <Carousel.Item>
+        <img
+          className="d-block w-100"
+          src="https://images.pexels.com/photos/533562/pexels-photo-533562.jpeg?auto=compress&cs=tinysrgb&w=600"
+          alt="Second slide"
+        />
+        <Carousel.Caption>
+          
+          <p>"Where your adventure begins,
+with the perfect ride every time."
+
+</p>
+        </Carousel.Caption>
+      </Carousel.Item>
+      <Carousel.Item>
+        <img
+          className="d-block w-100"
+          src="https://images.pexels.com/photos/221325/pexels-photo-221325.jpeg?auto=compress&cs=tinysrgb&w=600"
+          alt="Third slide"
+        />
+        <Carousel.Caption>
+          
+          <p>
+           "Drive the journey, not just the car.
+Explore more with comfort and style."
+          </p>
+        </Carousel.Caption>
+      </Carousel.Item>
+    </Carousel>
+
           {/* Hero Section */}
-          <Row className="align-items-center mb-5">
+          <Row className="align-items-center mb-5 mt-5">
             <Col md={6}>
               <h1 className="display-5 fw-bold mb-3">Find Your Perfect Ride</h1>
               <p className="lead">

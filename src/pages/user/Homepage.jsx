@@ -9,6 +9,7 @@ import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import Carousel from 'react-bootstrap/Carousel';
 
 function Homepage() {
   const userData = useSelector((state) => state.user);
@@ -108,7 +109,54 @@ function Homepage() {
   return (
     <div style={{ background: '#f8f9fa', minHeight: '100vh', paddingTop: '20px' }}>
     <Container>
-      <Form className="mb-4" onSubmit={(e) => {
+
+<Carousel data-bs-theme="dark">
+      <Carousel.Item>
+        <img
+          className="d-block w-100"
+          src="https://images.pexels.com/photos/1009871/pexels-photo-1009871.jpeg?auto=compress&cs=tinysrgb&w=600"
+          alt="First slide"
+        />
+        <Carousel.Caption>
+          
+          <p>"Rent fast. Drive smart.
+Freedom is just a key away."
+
+</p>
+        </Carousel.Caption>
+      </Carousel.Item>
+      <Carousel.Item>
+        <img
+          className="d-block w-100"
+          src="https://images.pexels.com/photos/533562/pexels-photo-533562.jpeg?auto=compress&cs=tinysrgb&w=600"
+          alt="Second slide"
+        />
+        <Carousel.Caption>
+          
+          <p>"Where your adventure begins,
+with the perfect ride every time."
+
+</p>
+        </Carousel.Caption>
+      </Carousel.Item>
+      <Carousel.Item>
+        <img
+          className="d-block w-100"
+          src="https://images.pexels.com/photos/221325/pexels-photo-221325.jpeg?auto=compress&cs=tinysrgb&w=600"
+          alt="Third slide"
+        />
+        <Carousel.Caption>
+          
+          <p>
+           "Drive the journey, not just the car.
+Explore more with comfort and style."
+          </p>
+        </Carousel.Caption>
+      </Carousel.Item>
+    </Carousel>
+
+      
+      <Form className="mb-4 mt-4" onSubmit={(e) => {
         e.preventDefault();
         fetchCars(query);
       }}>
