@@ -25,9 +25,11 @@ function UserLogin() {
     try {
       const res = await axios.post(`${baseUrl}/user/login`, data, { withCredentials: true });
       localStorage.setItem('token', res.data.token);
-      dispatch(saveuser(res.data.userExist));
-      // dispatch(saveuser(res.data.user));
+      //dispatch(saveuser(res.data.userExist));
+      //dispatch(saveuser(res.data.user));
 
+      dispatch(saveuser(res.data.user)); 
+      
       console.log("Dispatched user object:", res.data.userExist);
       console.log("Full login response:", res.data);
       
